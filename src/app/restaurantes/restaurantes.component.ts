@@ -84,11 +84,13 @@ export class RestaurantesComponent implements OnInit {
   }
 
   remover(id_restaurante: any){
-    this.restauranteService.remover(id_restaurante).subscribe(
-        response => (response == true) ? this.getRestaurantes() : alert("Nao foi possivel remover") ,
-        error => console.log(error),
-        () => console.log("Finishid Remove")
-    );
+    if(confirm("Deseja realmente remover ?")){
+      this.restauranteService.remover(id_restaurante).subscribe(
+          response => (response == true) ? this.getRestaurantes() : alert("Nao foi possivel remover") ,
+          error => console.log(error),
+          () => console.log("Finishid Remove")
+      );
+    }
   }
  
   fileEvent(event){

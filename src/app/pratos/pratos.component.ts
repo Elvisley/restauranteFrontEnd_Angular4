@@ -87,11 +87,13 @@ export class PratosComponent implements OnInit {
   }
 
   remover(id_prato: any){
-    this.pratoService.remover(id_prato).subscribe(
-        response => (response == true) ? this.getPratosRestaurante() : alert("Nao foi possivel remover") ,
-        error => console.log(error),
-        () => console.log("Finishid Remove")
-    );
+    if(confirm("Deseja realmente remover ?")){
+      this.pratoService.remover(id_prato).subscribe(
+          response => (response == true) ? this.getPratosRestaurante() : alert("Nao foi possivel remover") ,
+          error => console.log(error),
+          () => console.log("Finishid Remove")
+      );
+    }
   }
 
   cadastrar(){
