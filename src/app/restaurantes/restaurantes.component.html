@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button *ngIf="!formcadastro" (click)="toggleFormCadastro()" type="button" class="btn btn-info">  <i class="fa fa-plus"></i> Cadastrar</button>
+            <button *ngIf="formcadastro"  class="btn btn-danger" (click)="cancelar()" >Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="formcadastro">
+
+    <form>
+        <input type="hidden" name="id" [(ngModel)]="restaurante.id" />
+        
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input type="text" name="nome" id="nome" required class="form-control" [(ngModel)]="restaurante.nome" />
+        </div>
+        <div class="form-group">
+          <label for="endereco">Endereço</label>
+          <input type="text" name="endereco" id="endereco" required class="form-control" [(ngModel)]="restaurante.endereco" />
+        </div>
+        <div class="form-group">
+          <label for="telefone">Telefone:</label>
+          <input type="text" name="telefone" id="telefone" required class="form-control" [(ngModel)]="restaurante.telefone" />
+        </div>
+
+        <div class="form-group">
+          <label for="logo">Logo:</label>
+          <input type="file" name="logo" id="logo" (change)="fileEvent($event)"  required class="form-control" />
+        </div>
+        
+        <button  class="btn btn-primary" (click)="cadastrar()" >Cadastrar</button>
+      </form>
+  
+  <hr>
+</div>
+
+
+<div class="row" *ngIf="!formcadastro">
+  <div class="col-md-3 mt-4  mb-4" *ngFor="let rest of restaurantes">
+      <div class="card">
+        <img class="card-img-top img-responsive" style="min-width: 150px;height: 200px;" src="http://localhost:5000{{ rest.logo }}" alt="{{ rest.nome }}">
+        <div class="card-block">
+          <div class="card-text">
+
+            <address>
+              <b>{{ rest.nome.substring(0, 10) }}</b><br>
+              <i class="fa fa-map-marker "></i>
+              <a title="Como Chegar" href="https://www.google.com.br/maps/place/{{ rest.endereco }}" target="_blank">
+                {{ rest.endereco.substring(0, 20) }}
+              </a>
+              <br>
+              <i class="fa fa-phone"></i> {{ rest.telefone }}
+              </address>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row"> 
+              <div class="col-md-4">
+                <button title="Remover" (click)="remover(rest.id)" class="btn btn-danger">
+                  <i class="fa fa-close"></i>
+                </button>
+              </div>
+              <div class="col-md-4">
+                <button title="Editar" (click)="editar(rest.id)" class="btn btn-info">
+                  <i class="fa fa-pencil"></i>
+                </button>
+              </div>
+              <div class="col-md-4">
+                <a [routerLink]="['/restaurante', rest.id, 'pratos']" title="Cardapio" class="btn btn-primary btn-block">
+                  <i class="fa fa-cutlery"></i>
+                </a>
+              </div>
+          </div>
+            
+        </div>
+      </div>  
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-md-6">
+       <h3>Cardapio do {{ restaurante.nome }}</h3>
+    </div>
+    <div class="col-md-6">
+        <div class="pull-right">
+           <button *ngIf="!formcadastro" (click)="toggleFormCadastro()" type="button" class="btn btn-info">  <i class="fa fa-plus"></i> Cadastrar</button>
+           <button *ngIf="formcadastro"  class="btn btn-danger" (click)="cancelar()" >Cancelar</button>
+          </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="formcadastro">
+
+    <form>
+        <input type="hidden" name="id" [(ngModel)]="prato.id" />
+        <input type="hidden" name="restauranteId" [(ngModel)]="prato.restauranteId" />
+        
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input type="text" name="nome" id="nome" required class="form-control" [(ngModel)]="prato.nome" />
+        </div>
+        <div class="form-group">
+          <label for="descricao">Descricao</label>
+          <input type="text" name="descricao" id="descricao" required class="form-control" [(ngModel)]="prato.descricao" />
+        </div>
+
+        <div class="form-group">
+          <label for="preco">Preco</label>
+          <input type="text" name="preco" id="preco" required class="form-control" [(ngModel)]="prato.preco" />
+        </div>
+        
+        <div class="form-group">
+          <label for="logo">Foto:</label>
+          <input type="file" name="foto" id="foto" (change)="fileEvent($event)"  required class="form-control" />
+        </div>
+        
+        <button  class="btn btn-primary" (click)="cadastrar()" >Cadastrar</button>
+      </form>
+  <hr>
+</div>
+
+<div class="row" *ngIf="!formcadastro">
+  <div class="col-md-12 card mt-3" *ngFor="let prt of pratos">
+    <div class="row ">
+        <div class="col-md-4">
+          <img src="http://localhost:5000{{ prt.foto }}" width="250" height="200" alt="{{ prt.nome }}" class="w-100">
+        </div>
+        <div class="col-md-8 px-3">
+          <div class="card-block px-3">
+            <h4 class="card-title">{{ prt.nome }}</h4>
+            <p class="card-text">{{ prt.descricao }}</p>
+            <a class="btn btn-primary">{{ prt.preco }}</a>
+            <a (click)="editar(prt.id)" class="btn btn-info"><i class="fa fa-pencil"></i></a>
+            <a (click)="remover(prt.id)" class="btn btn-danger"><i class="fa fa-close"></i></a>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
